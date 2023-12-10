@@ -28,7 +28,7 @@ This project is a simple login system implemented in [programming language]. It 
 2. Navigate to the project directory:
 
    ```bash
-   cd LoginSystem
+   cd Scholapp
    ```
 
 3. Install dependencies:
