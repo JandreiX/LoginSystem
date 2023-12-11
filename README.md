@@ -1,8 +1,7 @@
-# Work in Progress
+```markdown
+# Scholapp - Login System
 
-# Login System
-
-This project is a simple login system implemented in [programming language]. It provides basic user authentication features and can be used as a foundation for building more complex applications.
+This project is a simple login system implemented in React Native. It provides basic user authentication features and can be used as a foundation for building more complex applications.
 
 ## Features
 
@@ -12,10 +11,6 @@ This project is a simple login system implemented in [programming language]. It 
 - [Any other features...]
 
 ## Getting Started
-
-### Prerequisites
-
-- [List any software or dependencies required to run the project]
 
 ### Installation
 
@@ -28,35 +23,28 @@ This project is a simple login system implemented in [programming language]. It 
 2. Navigate to the project directory:
 
    ```bash
-   cd LoginSystem
+   cd Scholapp
    ```
 
 3. Install dependencies:
 
    ```bash
-   [Command to install dependencies]
+   # Navigate to the project directory
+   cd Scholapp
+
+   # Install dependencies using npm
+   npm install
+
+   # or using yarn
+   yarn install
    ```
 
 ### Usage
 
-[Explain how to use your login system. Provide examples, code snippets, or instructions for integrating it into other projects.]
+This project includes the following screens:
 
-### Configuration
-
-[If there are configuration settings, environment variables, or any setup needed, provide details here.]
-
-## Contributing
-
-We welcome contributions! If you'd like to contribute to the project, please follow our [Contribution Guidelines](CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the [License Name] - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-[Optional: Mention any libraries, frameworks, or individuals you want to acknowledge.]
-
-## Contact
-
-[Provide your contact information or a way for users/developers to get in touch with you.]
+- **Login:** Allows users to log in with their credentials.
+- **Signup:** Enables new users to register with the system.
+- **Home:** Represents the user's dashboard after a successful login.
+- **RecoveryPass:** Allows users to reset their forgotten passwords.
+- **LandingPage:** Displays an introduction and login/signup buttons.

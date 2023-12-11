@@ -1,5 +1,4 @@
-// ForgotPasswordScreen.js
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -11,17 +10,23 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
-const ForgotPasswordScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-
-  const handleResetPassword = () => {
-    if (!email) {
-      Alert.alert('Error', 'Please enter your email address');
-      return;
-    }
-    navigation.navigate('Login');
-  };
+const RecoveryPass = ({ navigation }) => {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+    },
+    validationSchema: yup.object().shape({
+      email: yup.string().email('Invalid email').required('Email is required'),
+    }),
+    onSubmit: () => {
+      // Custom logic for handling password reset
+      Alert.alert('Password Reset', 'Check your email for further instructions.');
+      navigation.navigate('Login');
+    },
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,11 +45,14 @@ const ForgotPasswordScreen = ({ navigation }) => {
           placeholder="Email"
           keyboardType="email-address"
           autoCapitalize="none"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+          value={formik.values.email}
+          onChangeText={formik.handleChange('email')}
+          onBlur={formik.handleBlur('email')}
         />
+        <Text style={styles.errorText}>{formik.touched.email && formik.errors.email}</Text>
+
         <View style={styles.buttonContainer}>
-        <Button title="Reset Password" onPress={handleResetPassword} />
+          <Button title="Reset Password" onPress={formik.handleSubmit} />
         </View>
         <Text style={styles.loginLink} onPress={() => navigation.navigate('Login')}>
           Remember your password? Login here.
@@ -67,7 +75,7 @@ const styles = StyleSheet.create({
     padding: 22,
     paddingVertical: 15,
     paddingHorizontal: 20,
-    justifyContent: 'center', 
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
@@ -91,6 +99,13 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 20,
   },
+  errorText: {
+    color: 'red',
+    marginBottom: 8,
+    // Add the following lines to allow error text to wrap to the next line
+    width: '100%',
+    textAlign: 'center',
+  },
 });
 
-export default ForgotPasswordScreen;
+export default RecoveryPass;

@@ -1,5 +1,4 @@
-// LoginScreen.js
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,18 +9,27 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    if (username && password) {
-      navigation.navigate('Home');
-    } else {
-      alert('Please enter both username and password.');
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: yup.object().shape({
+      username: yup.string().required('Username is required'),
+      password: yup.string().required('Password is required'),
+    }),
+    onSubmit: (values) => {
+      if (values.username && values.password) {
+        navigation.navigate('Home');
+      } else {
+        alert('Please enter both username and password.');
+      }
+    },
+  });
 
   const handleForgotPassword = () => {
     navigation.navigate('RecoveryPass');
@@ -42,21 +50,28 @@ const LoginScreen = ({ navigation }) => {
         />
 
         <Text style={styles.title}>Login</Text>
+
         <TextInput
           style={styles.input}
           placeholder="Username"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          value={formik.values.username}
+          onChangeText={formik.handleChange('username')}
+          onBlur={formik.handleBlur('username')}
         />
+        <Text style={styles.errorText}>{formik.touched.username && formik.errors.username}</Text>
+
         <TextInput
           style={styles.input}
           placeholder="Password"
           secureTextEntry
-          value={password}
-          onChangeText={(text) => setPassword(text)}
+          value={formik.values.password}
+          onChangeText={formik.handleChange('password')}
+          onBlur={formik.handleBlur('password')}
         />
+        <Text style={styles.errorText}>{formik.touched.password && formik.errors.password}</Text>
+
         <View style={styles.buttonContainer}>
-          <Button title="Login" onPress={handleLogin} />
+          <Button title="Login" onPress={formik.handleSubmit} />
           <Text style={styles.forgotPasswordLink} onPress={handleForgotPassword}>
             Forgot your password?
           </Text>
@@ -110,6 +125,10 @@ const styles = StyleSheet.create({
     width: '80%', 
     height: 200, 
     marginBottom: 20, 
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 8,
   },
 });
 

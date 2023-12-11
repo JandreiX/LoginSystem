@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, ScrollView } from 'react-native';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const RegisterScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleRegister = () => {
-    if (!name || !email || !password) {
-      setErrorMessage('Please complete all fields to register an account.');
-    } else {
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: yup.object().shape({
+      name: yup.string().required('Name is required'),
+      email: yup.string().email('Invalid email').required('Email is required'),
+      password: yup.string().required('Password is required'),
+    }),
+    
+    onSubmit: (values) => {
       // Your registration logic here
       navigation.navigate('Home');
-    }
-  };
+    },
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -30,33 +36,39 @@ const RegisterScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Name"
-        value={name}
-        onChangeText={(text) => setName(text)}
+        value={formik.values.name}
+        onChangeText={formik.handleChange('name')}
+        onBlur={formik.handleBlur('name')}
       />
+      <Text style={styles.errorText}>{formik.touched.name && formik.errors.name}</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
+        value={formik.values.email}
+        onChangeText={formik.handleChange('email')}
+        onBlur={formik.handleBlur('email')}
       />
+      <Text style={styles.errorText}>{formik.touched.email && formik.errors.email}</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
+        value={formik.values.password}
+        onChangeText={formik.handleChange('password')}
+        onBlur={formik.handleBlur('password')}
       />
+      <Text style={styles.errorText}>{formik.touched.password && formik.errors.password}</Text>
 
-      {errorMessage !== '' && (
-        <Text style={styles.errorMessage}>{errorMessage}</Text>
+      {formik.errors.form && (
+        <Text style={styles.errorMessage}>{formik.errors.form}</Text>
       )}
 
       <View style={styles.buttonContainer}>
-        <Button title="Register" onPress={handleRegister} />
+        <Button title="Register" onPress={formik.handleSubmit} />
 
         <Text style={styles.loginLink} onPress={() => navigation.navigate('Login')}>
           Already have an account? Login here.
@@ -103,6 +115,13 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 200,
     marginBottom: 20,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 8,
+    // Add the following lines to allow error text to wrap to the next line
+    width: '100%',
+    textAlign: 'center',
   },
   errorMessage: {
     color: 'red',

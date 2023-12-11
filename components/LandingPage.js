@@ -1,31 +1,26 @@
-// LoginSignupButtons.js
+// LandingPage.js
 import React from 'react';
 import { View, Button, Image, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const LoginSignupButtons = ({ navigation }) => {
-  const handleLogin = () => {
-    navigation.navigate('Login');
-  };
-
-  const handleSignup = () => {
-    navigation.navigate('Signup');
-  };
+const LandingPage = () => {
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Image
         source={require('../image/AppLogo.png')}
         style={styles.image}
-        resizeMode="contain" 
+        resizeMode="contain"
       />
 
       <Text style={styles.title}>Scholapp</Text>
 
       <View style={styles.buttonContainer}>
-        <Button title="Login" onPress={handleLogin} />
+        <Button title="Login" onPress={() => navigation.navigate('Login')} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Signup" onPress={handleSignup} />
+        <Button title="Signup" onPress={() => navigation.navigate('Signup')} />
       </View>
     </View>
   );
@@ -36,12 +31,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#81c1db'
+    backgroundColor: '#81c1db',
   },
   image: {
-    width: '80%', 
-    height: 200, 
-    marginBottom: 20, 
+    width: '80%',
+    height: 200,
+    marginBottom: 20,
   },
   title: {
     fontSize: 20,
@@ -54,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginSignupButtons;
+export default LandingPage;

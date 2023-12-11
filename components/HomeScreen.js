@@ -1,4 +1,3 @@
-// HomeScreen.js
 import React from 'react';
 import { View, Text, Button, Image, StyleSheet } from 'react-native';
 
@@ -16,12 +15,12 @@ const HomeScreen = ({ navigation }) => {
         resizeMode="contain" 
       />
       
-        <Text style={styles.title}>
-          Welcome to Scholapp!
-          </Text>
-        
-        <View style={styles.buttonContainer}>
-      <Button title='Logout' onPress={handleLogout}/>
+      <Text style={styles.title}>
+        Welcome to Scholapp!
+      </Text>
+
+      <View style={styles.buttonContainer}>
+        <Button title='Logout' onPress={handleLogout} />
       </View>
     </View>
   );
@@ -41,13 +40,12 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '80%',
-    padding: 22,
+    marginTop: 20, // Add some spacing between the title and the button
     paddingVertical: 15,
     paddingHorizontal: 20,
-    justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 24, // Increase font size for a more prominent title
     fontWeight: 'bold',
     marginBottom: 16,
   },
