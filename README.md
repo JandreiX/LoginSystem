@@ -1,4 +1,3 @@
-```markdown
 # Scholapp - Login System
 
 This project is a simple login system implemented in React Native. It provides basic user authentication features and can be used as a foundation for building more complex applications.
